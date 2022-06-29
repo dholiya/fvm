@@ -42,6 +42,7 @@ dependencies:
   vector_math: ^2.0.8
   flutter_staggered_grid_view: ^0.6.1
   blobs: ^2.0.0
+  pin_code_fields: ^7.4.0
 
 
 
@@ -77,6 +78,7 @@ flutter:
     - assets/placeholder/login.png
     - assets/placeholder/forgot.png
     - assets/placeholder/register.png
+    - assets/placeholder/otp.png
     #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 #  assets:

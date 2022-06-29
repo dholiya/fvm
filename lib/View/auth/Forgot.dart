@@ -2,6 +2,7 @@ import 'package:blobs/blobs.dart';
 import 'package:flutter/material.dart';
 import 'package:fvm/Util/AppTheme.dart';
 import 'package:fvm/View/auth/Login.dart';
+import 'package:fvm/View/auth/OTP.dart';
 import 'package:fvm/View/auth/Register.dart';
 import 'package:fvm/View/menu/HomePage.dart';
 import 'package:fvm/main.dart';
@@ -46,15 +47,15 @@ class _ForgotScreen extends State<ForgotScreen> {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Expanded(
-                  child: Center(
-                    child: Text("Forgot Password?",
-                        style: AppTheme.getTextStyle(
-                            color: customAppTheme.primary,
-                            themeData.textTheme.headline4,
-                            fontWeight: 800)),
-                  ),
+                Expanded(child: Container(), flex: 1),
+                Center(
+                  child: Text("Forgot Password?",
+                      style: AppTheme.getTextStyle(
+                          color: customAppTheme.primary,
+                          themeData.textTheme.headline4,
+                          fontWeight: 800)),
                 ),
+                Expanded(child: Container(), flex: 1),
                 Image.asset(
                   AppImages.forgot,
                   fit: BoxFit.contain,
@@ -65,7 +66,7 @@ class _ForgotScreen extends State<ForgotScreen> {
                   behavior: HitTestBehavior.translucent,
                   onTap: () {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => LoginScreen()));
+                        MaterialPageRoute(builder: (context) => OTPScreen()));
                   },
                   child: Container(
                     padding: EdgeInsets.all(15),
@@ -86,49 +87,7 @@ class _ForgotScreen extends State<ForgotScreen> {
                     ),
                   ),
                 ),
-                Expanded(child: Container(), flex: 1),
-                Container(
-                  padding: EdgeInsets.symmetric(vertical: 10),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(150),
-                        topRight: Radius.circular(150)),
-                    color: customAppTheme.primaryBackground,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: Container(
-                          margin: EdgeInsets.only(left: 30),
-                          child: Text(
-                            'We send OTP to your X@X.com email address. Please check your inbox',
-                            style: TextStyle(
-                                color: customAppTheme.textlight,
-                                fontStyle: FontStyle.italic),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(right: 30),
-                        child: TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => ForgotScreen()));
-                          },
-                          child: Text(
-                            'Resend OTP',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: customAppTheme.primary),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                Expanded(child: Container(), flex: 2),
               ],
             ),
           ),

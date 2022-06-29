@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:fvm/Util/AppString.dart';
 import 'package:fvm/View/auth/Forgot.dart';
 import 'package:fvm/View/auth/Login.dart';
+import 'package:fvm/View/auth/OTP.dart';
 import 'package:fvm/View/auth/Register.dart';
 import 'package:fvm/View/menu/HomePage.dart';
 import 'package:fvm/Widget/bottombar/fancy_bottom_navigation.dart';
