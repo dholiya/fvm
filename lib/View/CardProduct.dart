@@ -6,8 +6,11 @@ import '../Util/Util.dart';
 
 class CardProduct extends StatefulWidget {
   String imgList;
+  final Function onCardClick;
+  final Function onFavClick;
 
-  CardProduct(this.imgList);
+  CardProduct(this.imgList,
+      {required this.onCardClick, required this.onFavClick});
 
   @override
   _CardProduct createState() => _CardProduct();
@@ -38,68 +41,54 @@ class _CardProduct extends State<CardProduct> {
               ),
               Container(
                 padding: EdgeInsets.all(6),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text("Coffee table",style: AppTheme.getTextStyle(themeData.textTheme.bodyText1,
-                        color: customAppTheme.textDark, fontSize: 16, fontWeight: 700),),
-                    Row(
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Highest bid: ",
-                            style: TextStyle(
-                                fontSize: 12, fontWeight: FontWeight.w500)),
-                        Text("${AppString.doller}" + "500")
+                        Text(
+                          "Coffee table",
+                          style: AppTheme.getTextStyle(
+                              themeData.textTheme.bodyText1,
+                              color: customAppTheme.textDark,
+                              fontSize: 16,
+                              fontWeight: 700),
+                        ),
+                        Row(
+                          children: [
+                            Text("Highest bid: ",
+                                style: TextStyle(
+                                    fontSize: 12, fontWeight: FontWeight.w500)),
+                            Text("${AppString.doller}" + "500")
+                          ],
+                        ),
                       ],
                     ),
-                    // Container(
-                    //   padding: EdgeInsets.only(top: 5),
-                    //   child: _BidNow(),
-                    // ),
-                    // Image.asset(
-                    //   widget.imgList,
-                    //   fit: BoxFit.fill,
-                    // )
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          if (Util.imgListFav.contains(widget.imgList)) {
+                            Util.imgListFav.remove(widget.imgList);
+                            widget.onFavClick();
+                          } else
+                            Util.imgListFav.add(widget.imgList);
+                        });
+                      },
+                      child: Icon(
+                          Util.imgListFav.contains(widget.imgList)
+                              ? Icons.star_rounded
+                              : Icons.star_border_rounded,
+                          color: customAppTheme.primary,
+                          size: 24),
+                    ),
                   ],
                 ),
               ),
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  _BidNow() {
-    return GestureDetector(
-      onTap: () {
-        // Util.checkInternet().then((value) {
-        //   if (!value) {
-        //     Dialogs.internetDialogRetry(themeData, context).then((value) {
-        //       internetChecker();
-        //     });
-        //   } else {
-        //     _verify();
-        //   }
-        // });
-      },
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            padding: EdgeInsets.all(6),
-            decoration: BoxDecoration(
-              color: customAppTheme.primary,
-              borderRadius: BorderRadius.all(Radius.circular(4.0)),
-            ),
-            child: Text(
-              AppString.bidNow,
-              textAlign: TextAlign.center,
-              style: AppTheme.getTextStyle(themeData.textTheme.bodyText1,
-                  color: customAppTheme.cardBottomBar, fontWeight: 500),
-            ),
-          ),
-        ],
       ),
     );
   }

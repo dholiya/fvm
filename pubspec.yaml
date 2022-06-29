@@ -41,6 +41,7 @@ dependencies:
   bottom_navy_bar: ^6.0.0
   vector_math: ^2.0.8
   flutter_staggered_grid_view: ^0.6.1
+  blobs: ^2.0.0
 
 
 
@@ -73,6 +74,9 @@ flutter:
     - assets/temp/iphone_13_128gb.png
     - assets/temp/ryobi_40v_trimmer.png
     - assets/temp/small_fan.png
+    - assets/placeholder/login.png
+    - assets/placeholder/forgot.png
+    - assets/placeholder/register.png
     #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 #  assets:

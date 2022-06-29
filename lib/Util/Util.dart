@@ -115,22 +115,26 @@ class Util {
 
   static Widget ButtonDesignIcon(
       IconData iconData, CustomAppTheme customAppTheme, ThemeData themeData) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Container(
-          padding: EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            color: customAppTheme.primary,
-            borderRadius: BorderRadius.all(Radius.circular(4.0)),
-          ),
-          child: Icon(iconData, color: customAppTheme.white, size: 30),
-        ),
-      ],
+    return Container(
+      padding: EdgeInsets.all(4),
+      decoration: BoxDecoration(
+        // color: customAppTheme.primary,
+        borderRadius: BorderRadius.all(Radius.circular(4.0)),
+      ),
+      child: Icon(iconData, color: customAppTheme.primary, size: 35),
     );
   }
 
+  static OutlineInputBorder noBorder8() {
+    return OutlineInputBorder(
+      borderSide: BorderSide(color: Colors.transparent),
+      borderRadius: BorderRadius.circular(8),
+    );
+  }
+
+
   /// This function is used for print API response
   static void consoleLog(String s) => log(s);
+
+  static List<String> imgListFav = <String>[];
 }

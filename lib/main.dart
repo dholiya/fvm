@@ -2,10 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:fvm/SplashScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:fvm/Util/AppString.dart';
+import 'package:fvm/View/auth/Forgot.dart';
+import 'package:fvm/View/auth/Login.dart';
+import 'package:fvm/View/auth/Register.dart';
 import 'package:fvm/View/menu/HomePage.dart';
 import 'package:fvm/Widget/bottombar/fancy_bottom_navigation.dart';
 import 'Util/AppTheme.dart';
 import 'View/drawer.dart';
+import 'View/menu/FavoritePage.dart';
+import 'View/menu/ProfilePage.dart';
 import 'View/second_page.dart';
 
 void main() => runApp(MyApp());
@@ -35,10 +40,13 @@ class MyApp extends StatelessWidget {
         ),
         primaryColor: customAppTheme.primary,
       ),
-      home: MyHomePage(),
+      home: LoginScreen(),
       routes: <String, WidgetBuilder>{
         '/splash': (BuildContext context) => SplashScreen(),
-        // LoginController.name: (BuildContext context) => LoginController(),
+        LoginScreen.name: (BuildContext context) => LoginScreen(),
+        RegisterScreen.name: (BuildContext context) => RegisterScreen(),
+        ForgotScreen.name: (BuildContext context) => ForgotScreen(),
+
       },
     );
   }
@@ -61,11 +69,6 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
-        leading: IconButton(
-            onPressed: () {
-              Scaffold.of(context).openDrawer();
-            },
-            icon: Icon(Icons.menu_rounded)),
         shadowColor: customAppTheme.blackTrans00,
         title: Text(AppString.AppName),
       ),
@@ -123,38 +126,9 @@ class _MyHomePageState extends State<MyHomePage> {
       case 0:
         return HomePage();
       case 1:
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Text("This is the search page"),
-            ElevatedButton(
-              child: Text(
-                "Start new page",
-                style: TextStyle(color: Colors.white),
-              ),
-              // color: Theme.of(context).primaryColor,
-              onPressed: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => SecondPage()));
-              },
-            )
-          ],
-        );
+        return FavoritePage();
       default:
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Text("This is the basket page"),
-            ElevatedButton(
-              child: Text(
-                "Start new page",
-                style: TextStyle(color: Colors.white),
-              ),
-              // color: Theme.of(context).primaryColor,
-              onPressed: () {},
-            )
-          ],
-        );
+        return ProfilePage();
     }
   }
 }

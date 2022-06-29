@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fvm/Util/AppString.dart';
+import 'package:fvm/View/auth/Login.dart';
 
 import '../Util/AppTheme.dart';
 
@@ -115,6 +116,28 @@ class _CustomDrawer extends State<CustomDrawer> {
                       });
                     },
                     selected: _selectedDestination == 2,
+                  ),
+                  Divider(),
+                  ListTile(
+                    selectedColor: customAppTheme.primary,
+                    leading: Icon(Icons.logout_rounded),
+                    textColor: customAppTheme.textDark,
+                    title: Text(AppString.logOut,
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w600)),
+                    onTap: () {
+                      setState(() {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => LoginScreen()));
+
+                        widget.onSelectedItem(3);
+                        _selectedDestination == 3;
+                        log('data: $_selectedDestination');
+                      });
+                    },
+                    selected: _selectedDestination == 3,
                   ),
                 ],
               ),

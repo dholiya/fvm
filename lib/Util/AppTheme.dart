@@ -151,7 +151,7 @@ class CustomAppTheme {
 
   CustomAppTheme({
     this.primary = const Color(0xff00539c),
-    this.primarylite = const Color(0xcc00539c),
+    this.primarylite = const Color(0xff0076e1),
     this.primaryBackground = const Color(0xffe7ebf3),
     this.primaryVariant = const Color(0xffffac63),
     this.primaryVariantLite = const Color(0xccffac63),

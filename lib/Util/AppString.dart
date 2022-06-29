@@ -41,4 +41,6 @@ class AppString {
 
   static String bidNow = 'Bid Now';
 
+  static String filter = "Filters";
+
 }
