@@ -58,12 +58,14 @@ class Util {
   static void createSnackBar(String message, BuildContext scaffoldContext,
       Color backgroundColor, Color textColor) {
     final snackBar = new SnackBar(
-        duration: const Duration(milliseconds: 1500),
+        duration: const Duration(milliseconds: 2000),
         content: new Text(message,
             style: TextStyle(color: textColor, fontWeight: FontWeight.w700)),
         backgroundColor: backgroundColor);
     // ignore: deprecated_member_use
-    Scaffold.of(scaffoldContext).showSnackBar(snackBar);
+    ScaffoldMessenger.of(scaffoldContext).showSnackBar(snackBar);
+    //
+    // Scaffold.of(scaffoldContext).showSnackBar(snackBar);
     // ScaffoldMessenger.of(scaffoldContext).showSnackBar(snackBar);
   }
 
@@ -137,4 +139,6 @@ class Util {
   static void consoleLog(String s) => log(s);
 
   static List<String> imgListFav = <String>[];
+
+
 }

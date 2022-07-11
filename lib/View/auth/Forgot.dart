@@ -4,7 +4,6 @@ import 'package:fvm/Util/AppTheme.dart';
 import 'package:fvm/View/auth/Login.dart';
 import 'package:fvm/View/auth/OTP.dart';
 import 'package:fvm/View/auth/Register.dart';
-import 'package:fvm/View/menu/HomePage.dart';
 import 'package:fvm/main.dart';
 
 import '../../Util/Util.dart';
@@ -65,8 +64,7 @@ class _ForgotScreen extends State<ForgotScreen> {
                 GestureDetector(
                   behavior: HitTestBehavior.translucent,
                   onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => OTPScreen()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => OTPScreen()));
                   },
                   child: Container(
                     padding: EdgeInsets.all(15),

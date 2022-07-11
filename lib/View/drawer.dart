@@ -3,9 +3,12 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fvm/Util/AppString.dart';
+import 'package:fvm/Util/SpUtil.dart';
 import 'package:fvm/View/auth/Login.dart';
 
+import '../SplashScreen.dart';
 import '../Util/AppTheme.dart';
+import '../main.dart';
 
 class CustomDrawer extends StatefulWidget {
   final Function onSelectedItem;
@@ -164,12 +167,32 @@ class _CustomDrawer extends State<CustomDrawer> {
   }
 
   Widget _toggleButton() {
-    return Container(
-      padding: EdgeInsets.only(top: 10),
-      child: Text(AppString.buyerMode,
-          style: TextStyle(
-              color: customAppTheme.whiteTextlight2,
-              fontSize: 14, fontWeight: FontWeight.w500)),
+    return GestureDetector(
+      behavior: HitTestBehavior.translucent,
+      onTap: () {
+        if (SplashScreen.isSeller) {
+          SpUtil.setIsSellerMode(false);
+          setState(() {
+            SplashScreen.isSeller = false;
+          });
+          Navigator.of(context).pushReplacementNamed(MyHomePage.name);
+        } else {
+          SpUtil.setIsSellerMode(true);
+          setState(() {
+            SplashScreen.isSeller = true;
+          });
+          Navigator.of(context).pushReplacementNamed(MyHomePage.name);
+        }
+      },
+      child: Container(
+        padding: EdgeInsets.all(6),
+        child: Text(
+            SplashScreen.isSeller ? AppString.buyerMode : AppString.sellerMode,
+            style: TextStyle(
+                color: customAppTheme.whiteTextlight2,
+                fontSize: 14,
+                fontWeight: FontWeight.w500)),
+      ),
     );
   }
 }

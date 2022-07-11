@@ -60,7 +60,7 @@ class _OTPScreen extends State<OTPScreen> {
     customAppTheme = CustomAppTheme();
     buildContext = context;
     return Scaffold(
-      backgroundColor: customAppTheme.blackTrans00,
+      backgroundColor: customAppTheme.white,
       key: scaffoldKey,
       appBar: AppBar(
         iconTheme: IconThemeData(color: customAppTheme.textDark),

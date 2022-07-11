@@ -43,4 +43,13 @@ class AppString {
 
   static String filter = "Filters";
 
+  static String email = "Email";
+
+  static String address="Address";
+
+  static String addProduct = "Add Product";
+  static var yourProduct = "Your Products";
+
+  static String listYourProduct="List your product";
+
 }
