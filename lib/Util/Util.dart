@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:connectivity/connectivity.dart';
+import 'package:fvm/Model/auth/LoginModel.dart';
 
 import 'AppTheme.dart';
 
@@ -55,18 +56,14 @@ class Util {
     return name.length < 4 ? name : name.substring(0, 3);
   }
 
-  static void createSnackBar(String message, BuildContext scaffoldContext,
+  static void createSnackBar(String? message, BuildContext scaffoldContext,
       Color backgroundColor, Color textColor) {
     final snackBar = new SnackBar(
         duration: const Duration(milliseconds: 2000),
-        content: new Text(message,
+        content: new Text(message!,
             style: TextStyle(color: textColor, fontWeight: FontWeight.w700)),
         backgroundColor: backgroundColor);
-    // ignore: deprecated_member_use
     ScaffoldMessenger.of(scaffoldContext).showSnackBar(snackBar);
-    //
-    // Scaffold.of(scaffoldContext).showSnackBar(snackBar);
-    // ScaffoldMessenger.of(scaffoldContext).showSnackBar(snackBar);
   }
 
   static void createSnackBarGlobal(String message, ScaffoldState scaffoldState,
@@ -140,5 +137,6 @@ class Util {
 
   static List<String> imgListFav = <String>[];
 
+  static LoginModel? loginData;
 
 }

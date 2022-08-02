@@ -1,12 +1,16 @@
 import 'dart:io';
 import 'package:camera/camera.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:fvm/Controller/auth/VerifyOTPParent.dart';
+import 'package:fvm/Controller/product/AddProductController.dart';
+import 'package:fvm/Controller/product/AddProductParent.dart';
+import 'package:fvm/Model/CommonModel.dart';
 import 'package:fvm/Util/AppString.dart';
 import 'package:fvm/Util/AppTheme.dart';
 import 'package:fvm/Widget/DropDownCustom.dart';
-import 'dart:math' as math;
 
 import '../../Util/Util.dart';
 import '../ViewProductDetails.dart';
@@ -14,11 +18,12 @@ import 'TakePictureScreen.dart';
 
 class AddProduct extends StatefulWidget {
   static const name = '/addProduct';
+
   @override
   _AddProduct createState() => _AddProduct();
 }
 
-class _AddProduct extends State<AddProduct> {
+class _AddProduct extends State<AddProduct> implements AddProductController {
   late CustomAppTheme customAppTheme;
   late ThemeData themeData;
   final nameController = TextEditingController();
@@ -26,15 +31,23 @@ class _AddProduct extends State<AddProduct> {
   final longController = TextEditingController();
   final tagController = TextEditingController();
   final priceController = TextEditingController();
-  List<String> tagList = <String>[];
 
-  late CameraController _controller;
+  List<String> tagList = <String>[];
+  // late CameraController _controller = ;
   var firstCamera;
   var image;
-  var selectedCategory="";
+  var selectedCategory = "";
+  late BuildContext buildContext;
 
   DateTime date = new DateTime(2000);
 
+
+  AddProductParent? _parent;
+
+  _AddProduct(){
+    _parent = AddProductParent(this);
+
+  }
   @override
   void initState() {
     super.initState();
@@ -43,13 +56,14 @@ class _AddProduct extends State<AddProduct> {
   @override
   void dispose() {
     // Dispose of the controller when the widget is disposed.
-    _controller.dispose();
+    // _controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     themeData = Theme.of(context);
+    buildContext = context;
     customAppTheme = CustomAppTheme();
     return SafeArea(
       child: Scaffold(
@@ -67,10 +81,10 @@ class _AddProduct extends State<AddProduct> {
                   onTap: () async {
                     final cameras = await availableCameras();
                     firstCamera = cameras.first;
-                    await Navigator.of(context)
+                    await Navigator.of(buildContext)
                         .push(
                       MaterialPageRoute(
-                        builder: (context) => TakePictureScreen(
+                        builder: (buildContext) => TakePictureScreen(
                           camera: firstCamera,
                         ),
                       ),
@@ -111,7 +125,8 @@ class _AddProduct extends State<AddProduct> {
                             children: [
                               for (var i in image)
                                 Container(
-                                    width: MediaQuery.of(context).size.width * 0.3,
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.3,
                                     padding: EdgeInsets.only(right: 10),
                                     child: Stack(
                                       children: [
@@ -268,7 +283,7 @@ class _AddProduct extends State<AddProduct> {
                     onTap: () {
                       final current = new DateTime.now();
                       final newDate = current.add(Duration(days: 10));
-                      DatePicker.showDateTimePicker(context,
+                      DatePicker.showDateTimePicker(buildContext,
                           showTitleActions: true,
                           minTime: DateTime(current.year, current.month,
                               current.day + 1, current.hour),
@@ -323,19 +338,37 @@ class _AddProduct extends State<AddProduct> {
                 GestureDetector(
                   behavior: HitTestBehavior.translucent,
                   onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ViewProductDetails(
-                                  image,
-                                  nameController.text.toString(),
-                                  priceController.text.toString(),
-                                  shortController.text.toString(),
-                                  longController.text.toString(),
-                                  selectedCategory,
-                              tagList,
-                              date
-                                )));
+                    Map<String, String> tagsJson = Map();
+
+                    tagList.asMap().forEach((index, value) {
+                      tagsJson["tag[${index}]"]=value;;
+                    });
+
+                    _parent?.loadData({
+                      'name': nameController.text.toString().trim(),
+                      'short_description': shortController.text.toString()
+                          .trim(),
+                      'long_description': longController.text.toString(),
+                      'base_price': priceController.text.toString(),
+                      'category': selectedCategory.toString(),
+                      'location_id': "sadasd54a5sdads",
+                      'bid_end_date': date.toString(),
+                      'current_highest_bid': "0",
+                      'seller_id': "62d6d8b0e00919154cc53edb",
+                      'bids': "5",
+                    },image,tagsJson);
+                    // Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //         builder: (buildContext) => ViewProductDetails(
+                    //             image,
+                    //             nameController.text.toString(),
+                    //             priceController.text.toString(),
+                    //             shortController.text.toString(),
+                    //             longController.text.toString(),
+                    //             selectedCategory,
+                    //             tagList,
+                    //             date)));
                   },
                   child: Container(
                     padding: EdgeInsets.symmetric(vertical: 25),
@@ -422,4 +455,32 @@ class _AddProduct extends State<AddProduct> {
       ),
     );
   }
+
+  @override
+  void onLoadCompleted(CommonModel items) {
+    Util.createSnackBar(
+        items.msg,
+        context,
+        customAppTheme.colorError,
+        customAppTheme.white);
+  }
+
+  @override
+  void onLoadConnection(connection) {
+    Util.createSnackBar(
+        connection,
+        context,
+        customAppTheme.colorError,
+        customAppTheme.white);
+  }
+
+  @override
+  void onLoadError(CommonModel items) {
+    Util.createSnackBar(
+        items.msg,
+        context,
+        customAppTheme.colorError,
+        customAppTheme.white);
+  }
+
 }

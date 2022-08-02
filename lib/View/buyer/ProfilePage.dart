@@ -1,12 +1,8 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:fvm/Util/AppImages.dart';
 import 'package:fvm/Util/AppString.dart';
 import 'package:fvm/Util/AppTheme.dart';
-
 import '../../Util/Util.dart';
-import '../sellermode/AddProduct.dart';
 
 class ProfilePage extends StatefulWidget {
   static const name = '/profile';
@@ -56,27 +52,6 @@ class _ProfilePage extends State<ProfilePage> {
               ),
             ),
             userInput(Icons.email_rounded, "example@gmail.com"),
-            GestureDetector(
-              onTap: (){
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => AddProduct()));
-
-
-              },
-              child: Container(
-                padding: EdgeInsets.only(top: 50),
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "Saller temp",
-                  style: AppTheme.getTextStyle(
-                      color: customAppTheme.primary,
-                      themeData.textTheme.bodyText1,
-                      fontWeight: 700),
-                ),
-              ),
-            ),
             // userInput(Icons.phone, "No address")
           ],
         ),

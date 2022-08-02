@@ -1,27 +1,65 @@
-import 'package:flutter/cupertino.dart';
-import 'Util/AppThemeNotifier.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'dart:math';
 
-import 'Util/SpUtil.dart';
-import 'main.dart';
+import 'package:flutter/material.dart';
+import 'package:fvm/Model/auth/LoginModel.dart';
+import 'package:fvm/TabHandler.dart';
+import 'package:fvm/Util/Headers.dart';
+import 'package:fvm/Util/Util.dart';
+import 'package:fvm/View/auth/Login.dart';
+
+import '../Util/AppImages.dart';
+import '../Util/SpUtil.dart';
 
 class SplashScreen extends StatefulWidget {
-  static const name = '/splashScreen';
   static bool isSeller = false;
+  static const name = '/splashScreen';
 
   @override
-  _SplashScreenState createState() => _SplashScreenState();
+  _SplashScreen createState() => _SplashScreen();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreen extends State<SplashScreen> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late List<Bubble> bubbles;
+  final int numberOfBubbles = 25;
+  // final Color color = Colors.amber;
+  final double maxBubbleSize = 25.0;
   late BuildContext buildContext;
+
+  List colors = [Util.primaryLite, Util.primaryVariant];
+  Random random = new Random();
+
+  int index = 0;
+
+  void changeIndex() {
+    setState(() => index = random.nextInt(2));
+  }
 
   @override
   void initState() {
     super.initState();
+
+    // Initialize bubbles
+    bubbles = [];
+    int i = numberOfBubbles;
+    while (i > 0) {
+      changeIndex();
+      bubbles.add(Bubble(colors[index], maxBubbleSize));
+      i--;
+    }
+
+    // Init animation controller
+    _controller = new AnimationController(
+        duration: const Duration(seconds: 2500), vsync: this);
+    _controller.addListener(() {
+      updateBubblePosition();
+    });
+    _controller.forward();
+
     initSP();
+
   }
+
 
   Future<void> initSP() async {
     await SpUtil.getInstance().then((value) {
@@ -30,21 +68,129 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
 ////////////////////////////////////////////////////////////////
-  void isSellerMode() async {
+  void isSellerMode()  {
     setState(() {
       SplashScreen.isSeller = SpUtil.getIsSellerMode();
     });
-    Future.delayed(const Duration(milliseconds: 3000), () {
-      setState(() {
-        Navigator.of(buildContext).pushReplacementNamed(MyHomePage.name);
+    Future.delayed(const Duration(milliseconds: 4000), () {
+      setState(()  {
+        var login = SpUtil.getLogin();
+         if(login){
+           Util.loginData = SpUtil.getUserData();
+           Headers.instance.loginToken = Util.loginData?.accessToken;
+           Navigator.of(buildContext).pushReplacementNamed(TabHandler.name);
+         } else{
+           Navigator.of(buildContext).pushReplacementNamed(LoginScreen.name);
+         }
       });
     });
     return;
   }
 
   @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    buildContext = context;
-    return Container();
+    buildContext= context;
+    return Scaffold(
+      body: Stack(
+        alignment: Alignment.center,
+        children: [
+          Container(
+            child: Image.asset(
+              AppImages.iclauncher,
+              fit: BoxFit.fill,
+            ),
+          ),
+          CustomPaint(
+            foregroundPainter:
+            BubblePainter(bubbles: bubbles, controller: _controller),
+            size: Size(MediaQuery.of(context).size.width,
+                MediaQuery.of(context).size.height),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void updateBubblePosition() {
+    bubbles.forEach((it) => it.updatePosition());
+    setState(() {});
+  }
+}
+
+class BubblePainter extends CustomPainter {
+  List<Bubble> bubbles;
+  AnimationController controller;
+
+  BubblePainter({required this.bubbles, required this.controller});
+
+  @override
+  void paint(Canvas canvas, Size canvasSize) {
+    bubbles.forEach((it) => it.draw(canvas, canvasSize));
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return true;
+  }
+}
+
+class Bubble {
+  Color colour= Colors.amber;
+  double direction=0.0;
+  double speed=0.0;
+  double radius=0.0;
+  double x=0.0;
+  double y=0.0;
+
+  Bubble(color, maxBubbleSize) {
+    this.colour = color.withOpacity(Random().nextDouble());
+    this.direction = Random().nextDouble() * 360;
+    this.speed = 2;
+    this.radius = Random().nextDouble() * maxBubbleSize;
+  }
+
+  draw(Canvas canvas, Size canvasSize) {
+    Paint paint = new Paint()
+      ..color = colour
+      ..strokeCap = StrokeCap.round
+      ..style = PaintingStyle.fill;
+
+    assignRandomPositionIfUninitialized(canvasSize);
+
+    randomlyChangeDirectionIfEdgeReached(canvasSize);
+
+    canvas.drawCircle(Offset(x, y), radius, paint);
+  }
+
+  void assignRandomPositionIfUninitialized(Size canvasSize) {
+    if (x == null) {
+      this.x = Random().nextDouble() * canvasSize.width;
+    }
+
+    if (y == null) {
+      this.y = Random().nextDouble() * canvasSize.height;
+    }
+  }
+
+  updatePosition() {
+    var a = 180 - (direction + 90);
+    direction > 0 && direction < 180
+        ? x += speed * sin(direction) / sin(speed)
+        : x -= speed * sin(direction) / sin(speed);
+    direction > 90 && direction < 270
+        ? y += speed * sin(a) / sin(speed)
+        : y -= speed * sin(a) / sin(speed);
+  }
+
+  randomlyChangeDirectionIfEdgeReached(Size canvasSize) {
+    if (x > canvasSize.width || x < 0 || y > canvasSize.height || y < 0) {
+      direction = Random().nextDouble() * 360;
+    }
   }
 }

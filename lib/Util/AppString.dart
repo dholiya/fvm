@@ -11,8 +11,7 @@ class AppString {
   static String favorite = 'Favorite';
   static String profile = 'Profile';
 
-  static String sellerMode =  "Switch to seller mode";
-  static String buyerMode = "Switch to buyer mode";
+  static String sellerMode =  "Seller mode";
 
   // Authentication
   static String getStarted = 'Get Started';
@@ -51,5 +50,12 @@ class AppString {
   static var yourProduct = "Your Products";
 
   static String listYourProduct="List your product";
+  static String noInternetConnection ="Please check your internet connectivity and try again";
+
+  static String valiData ="Please enter valid data";
+
+  static String retry = "Retry";
+
+  static String somethingWrong="Something went wrong ";
 
 }

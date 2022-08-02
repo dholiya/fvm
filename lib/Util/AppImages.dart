@@ -14,5 +14,6 @@ class AppImages {
   static String otp = 'assets/placeholder/otp.png';
 
   static String watermark = 'assets/fvm/watermark.png';
+  static String iclauncher = 'assets/fvm/iclauncher.png';
 
 }

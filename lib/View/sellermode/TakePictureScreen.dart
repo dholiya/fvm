@@ -149,6 +149,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                           final cPath = image.path;
                           final cBytes = await File(cPath).readAsBytes();
                           var captureImg = decodeImage(cBytes);
+                          // img.Image thumbnail = copyResize(captureImg!, width: 150);
 
                           File wmFile = await getImageFileFromAssets(AppImages.watermark);
                           final wmByte = await wmFile.readAsBytes();
@@ -156,15 +157,14 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 
 
                           await drawImage(captureImg!, wmImage!);
-
-                          File(image.path).writeAsBytesSync(encodePng(captureImg));
+                          img.Image thumbnail = copyResize(captureImg, width: 150);
+                          File(image.path).writeAsBytesSync(encodePng(thumbnail));
 
                           setState(() {
                             images.add(image);
                             stateProcess = true;
                           });
                         } catch (e) {
-                          // If an error occurs, log the error to the console.
                           print(e);
                           stateProcess = true;
                         }

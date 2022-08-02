@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:fvm/Model/auth/LoginModel.dart';
+import 'package:fvm/Util/Util.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:synchronized/synchronized.dart';
 
@@ -74,7 +76,7 @@ class SpUtil {
   }
 //////////////////////////////////////////////////////////////////
 
-  // Login
+  // mode
   static bool getIsSellerMode({bool defValue = false}) {
     if (_prefs == null) return defValue;
     return _prefs?.getBool("mode") ?? defValue;
@@ -83,6 +85,30 @@ class SpUtil {
     if (_prefs == null) return null;
     return _prefs?.setBool("mode", appVersion);
   }
+
+
+  // Login
+  static bool getIsLogin({bool defValue = false}) {
+    if (_prefs == null) return defValue;
+    return _prefs?.getBool("login") ?? defValue;
+  }
+  static Future<bool>? setIsLogin(bool appVersion) {
+    if (_prefs == null) return null;
+    return _prefs?.setBool("login", appVersion);
+  }
+
+  // user data
+  static LoginModel? getUserData() {
+    if (_prefs == null) return null;
+    String? json = _prefs?.getString('user');
+    Util.consoleLog("asds" +json.toString());
+    return LoginModel.fromJson(jsonDecode(json!));
+  }
+  static Future<bool>? setUserData(user) {
+    if (_prefs == null) return null;
+    return _prefs?.setString("user", json.encode(user));
+  }
+
   ////////////////////////////////////////////////////////
   //Sp is initialized
   static bool isInitialized() {

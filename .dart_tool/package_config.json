@@ -8,6 +8,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "args",
+      "rootUri": "file:///E:/Android/src/flutter/.pub-cache/hosted/pub.dartlang.org/args-2.3.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "async",
       "rootUri": "file:///E:/Android/src/flutter/.pub-cache/hosted/pub.dartlang.org/async-2.8.2",
       "packageUri": "lib/",
@@ -165,7 +171,7 @@
     },
     {
       "name": "flutter_datetime_picker",
-      "rootUri": "file:///E:/Android/src/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_datetime_picker-1.5.1",
+      "rootUri": "file:///E:/Android/src/flutter/.pub-cache/git/flutter_datetime_picker-654aca41d5840fe31e55ddd0631f6fd3f1f0f710/",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -174,6 +180,12 @@
       "rootUri": "file:///E:/Android/src/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_lints-2.0.1",
       "packageUri": "lib/",
       "languageVersion": "2.17"
+    },
+    {
+      "name": "flutter_native_splash",
+      "rootUri": "file:///E:/Android/src/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_native_splash-2.2.6",
+      "packageUri": "lib/",
+      "languageVersion": "2.15"
     },
     {
       "name": "flutter_plugin_android_lifecycle",
@@ -228,6 +240,12 @@
       "rootUri": "file:///E:/Android/src/flutter/.pub-cache/hosted/pub.dartlang.org/js-0.6.4",
       "packageUri": "lib/",
       "languageVersion": "2.16"
+    },
+    {
+      "name": "lint",
+      "rootUri": "file:///E:/Android/src/flutter/.pub-cache/hosted/pub.dartlang.org/lint-1.10.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
     },
     {
       "name": "lints",
@@ -458,6 +476,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "universal_io",
+      "rootUri": "file:///E:/Android/src/flutter/.pub-cache/hosted/pub.dartlang.org/universal_io-2.0.4",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "vector_math",
       "rootUri": "file:///E:/Android/src/flutter/.pub-cache/hosted/pub.dartlang.org/vector_math-2.1.2",
       "packageUri": "lib/",
@@ -482,13 +506,19 @@
       "languageVersion": "2.17"
     },
     {
+      "name": "yaml",
+      "rootUri": "file:///E:/Android/src/flutter/.pub-cache/hosted/pub.dartlang.org/yaml-3.1.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "fvm",
       "rootUri": "../",
       "packageUri": "lib/",
       "languageVersion": "2.17"
     }
   ],
-  "generated": "2022-07-10T23:07:26.435423Z",
+  "generated": "2022-07-26T16:09:13.351683Z",
   "generator": "pub",
   "generatorVersion": "2.17.1"
 }

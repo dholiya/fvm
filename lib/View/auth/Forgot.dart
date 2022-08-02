@@ -1,8 +1,13 @@
 import 'package:blobs/blobs.dart';
 import 'package:flutter/material.dart';
+import 'package:fvm/Controller/auth/ForgotPasswordController.dart';
+import 'package:fvm/Controller/auth/ForgotPasswordParent.dart';
+import 'package:fvm/Controller/auth/VerifyOTPController.dart';
+import 'package:fvm/Controller/auth/VerifyOTPParent.dart';
+import 'package:fvm/Model/CommonModel.dart';
 import 'package:fvm/Util/AppTheme.dart';
 import 'package:fvm/View/auth/Login.dart';
-import 'package:fvm/View/auth/OTP.dart';
+import 'package:fvm/View/auth/VerifyOTP.dart';
 import 'package:fvm/View/auth/Register.dart';
 import 'package:fvm/main.dart';
 
@@ -16,12 +21,17 @@ class ForgotScreen extends StatefulWidget {
   _ForgotScreen createState() => _ForgotScreen();
 }
 
-class _ForgotScreen extends State<ForgotScreen> {
+class _ForgotScreen extends State<ForgotScreen> implements ForgotPasswordController{
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   late CustomAppTheme customAppTheme;
   late BuildContext buildContext;
   late ThemeData themeData;
+  ForgotPasswordParent? _parent;
+
+  _ForgotScreen(){
+    _parent = ForgotPasswordParent(this);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +74,14 @@ class _ForgotScreen extends State<ForgotScreen> {
                 GestureDetector(
                   behavior: HitTestBehavior.translucent,
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => OTPScreen()));
+                    if (emailController.text.toString().isEmpty) {
+                      Util.createSnackBar("Enter email", context,
+                          customAppTheme.primaryVariant, customAppTheme.white);
+                      return;
+                    }
+                    _parent
+                        ?.loadData({"email": emailController.text.toString()});
+
                   },
                   child: Container(
                     padding: EdgeInsets.all(15),
@@ -138,5 +155,22 @@ class _ForgotScreen extends State<ForgotScreen> {
         ),
       ),
     );
+  }
+
+  @override
+  void onLoadCompleted(CommonModel items) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => OTPScreen(emailController.text.toString().toString())));
+  }
+
+  @override
+  void onLoadConnection(connection) {
+    Util.createSnackBar(connection, context,
+        customAppTheme.colorError, customAppTheme.white);
+  }
+
+  @override
+  void onLoadError(CommonModel items) {
+    Util.createSnackBar(items.msg, context,
+        customAppTheme.colorError, customAppTheme.white);
   }
 }
