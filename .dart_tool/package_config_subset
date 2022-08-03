@@ -47,9 +47,9 @@ camera_web
 file:///E:/Android/src/flutter/.pub-cache/hosted/pub.dartlang.org/camera_web-0.2.1+6/
 file:///E:/Android/src/flutter/.pub-cache/hosted/pub.dartlang.org/camera_web-0.2.1+6/lib/
 carousel_slider
-2.6
-file:///E:/Android/src/flutter/.pub-cache/hosted/pub.dartlang.org/carousel_slider-2.3.4/
-file:///E:/Android/src/flutter/.pub-cache/hosted/pub.dartlang.org/carousel_slider-2.3.4/lib/
+2.12
+file:///E:/Android/src/flutter/.pub-cache/hosted/pub.dartlang.org/carousel_slider-4.1.1/
+file:///E:/Android/src/flutter/.pub-cache/hosted/pub.dartlang.org/carousel_slider-4.1.1/lib/
 characters
 2.12
 file:///E:/Android/src/flutter/.pub-cache/hosted/pub.dartlang.org/characters-1.2.0/
@@ -142,6 +142,10 @@ image
 2.15
 file:///E:/Android/src/flutter/.pub-cache/hosted/pub.dartlang.org/image-3.2.0/
 file:///E:/Android/src/flutter/.pub-cache/hosted/pub.dartlang.org/image-3.2.0/lib/
+intl
+2.12
+file:///E:/Android/src/flutter/.pub-cache/hosted/pub.dartlang.org/intl-0.17.0/
+file:///E:/Android/src/flutter/.pub-cache/hosted/pub.dartlang.org/intl-0.17.0/lib/
 js
 2.16
 file:///E:/Android/src/flutter/.pub-cache/hosted/pub.dartlang.org/js-0.6.4/

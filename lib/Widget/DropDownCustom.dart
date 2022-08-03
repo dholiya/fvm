@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:fvm/Util/AppTheme.dart';
+import 'package:fvm/Util/Util.dart';
 
 class DropDownCustom extends StatefulWidget {
   var customAppTheme;
   var themeData;
+  var selected;
   final Function onSelect;
 
   DropDownCustom(
       {super.key,
       required this.customAppTheme,
       required this.themeData,
-      required this.onSelect});
+      required this.onSelect,required this.selected});
 
   @override
-  _DropDownCustom createState() => _DropDownCustom();
+  _DropDownCustom createState() => _DropDownCustom(selected);
 }
 
 class _DropDownCustom extends State<DropDownCustom> {
@@ -29,6 +31,10 @@ class _DropDownCustom extends State<DropDownCustom> {
     'Electric',
     'Others'
   ];
+  _DropDownCustom(selected){
+    if(!(_chosenValue==null || _chosenValue!.isEmpty))
+      _chosenValue = selected;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,8 +51,11 @@ class _DropDownCustom extends State<DropDownCustom> {
           value: _chosenValue,
           dropdownColor: widget.customAppTheme.white,
           onChanged: (newValue) => setState(() {
-            widget.onSelect(_chosenValue);
+
             _chosenValue = newValue;
+            widget.onSelect(_chosenValue);
+            Util.consoleLog("dd select cate : "+_chosenValue.toString());
+
           }),
           items: items
               .map<DropdownMenuItem<String>>(

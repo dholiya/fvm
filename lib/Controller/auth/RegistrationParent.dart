@@ -17,7 +17,7 @@ class RegistrationParent {
       if(value) {
         var response = await http.post(Api.registration,headers: Headers.instance.getCommonHeader(), body: bodyData);
         var data = json.decode(response.body);
-        if (data['status']!= 200 || data['data']==null) {
+        if (data['status']!= 200 ) {
           contract.onLoadError(CommonModel.fromJson(data));
           return;
         }

@@ -52,8 +52,10 @@ dependencies:
       ref: master
   shared_preferences: ^2.0.15
   synchronized: ^3.0.0+2
-  carousel_slider: ^2.3.1
+  carousel_slider: ^4.1.1
   flutter_native_splash: ^2.2.6
+  intl: ^0.17.0
+
 
 
 dev_dependencies:
@@ -80,25 +82,12 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/temp/coffee_table.png
-    - assets/temp/gaming_headset.png
-    - assets/temp/iphone_13_128gb.png
-    - assets/temp/ryobi_40v_trimmer.png
-    - assets/temp/small_fan.png
     - assets/placeholder/login.png
     - assets/placeholder/forgot.png
     - assets/placeholder/register.png
     - assets/placeholder/otp.png
     - assets/fvm/watermark.png
     - assets/fvm/iclauncher.png
-    #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
-#  assets:
-#    - assets/temp/coffee_table.png
-#    - assets/temp/gaming_headset.png
-#    - assets/temp/iphone_13_128gb.png
-#    - assets/temp/ryobi_40v_trimmer.png
-#    - assets/temp/small_fan.png
 #
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -126,3 +115,10 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+
+#0 loading
+#1 data
+#2 connetion error
+#3 no data by given data
+#4 something wrong

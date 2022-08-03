@@ -23,11 +23,11 @@ class _RegisterScreen extends State<RegisterScreen>
   final lastnameController = TextEditingController();
   final passwordConfirmController = TextEditingController();
   final passwordController = TextEditingController();
+  int? select = 5;
+
   late CustomAppTheme customAppTheme;
   late BuildContext buildContext;
   late ThemeData themeData;
-  int? select = 5;
-
   RegistrationParent? _parent;
 
   _RegisterScreen() {
@@ -109,6 +109,7 @@ class _RegisterScreen extends State<RegisterScreen>
                                 children: <Widget>[
                                   addRadioButton(0, 'Male'),
                                   addRadioButton(1, 'Female'),
+                                  // addRadioButton(2, 'Other'),
                                 ],
                               ),
                             ),
@@ -119,7 +120,7 @@ class _RegisterScreen extends State<RegisterScreen>
                                     firstnameController.text.toString().trim();
                                 var lastName =
                                     lastnameController.text.toString().trim();
-                                var gender = select == 0 ? "Male" : "Female";
+                                var gender = select == 0 ? "Male": select == 1?  "Female":"";
                                 var dob = "1000-02-02T00:00:00";
                                 var isSeller = "false";
                                 var email =
@@ -247,21 +248,6 @@ class _RegisterScreen extends State<RegisterScreen>
         keyboardType: keyboardType,
         decoration: InputDecoration(
           filled: true,
-          // suffixIcon:
-          // // ac_unit != Icons.ac_unit
-          // //     ?
-          // GestureDetector(
-          //         onTap: () {
-          //           setState(() {
-          //             ac_unit == Icons.visibility_off_outlined;
-          //           });
-          //         },
-          //         child: Icon(
-          //           ac_unit,
-          //           color: customAppTheme.primarylite,
-          //         ),
-          //       ),
-          //     // : Container(width: 0, height: 0),
           prefixIcon: GestureDetector(
             onTap: () {},
             child: Icon(
@@ -289,10 +275,6 @@ class _RegisterScreen extends State<RegisterScreen>
       return false;
     } else if (lastName.isEmpty) {
       Util.createSnackBar("Enter last name", context,
-          customAppTheme.primaryVariant, customAppTheme.white);
-      return false;
-    } else if (select == 5) {
-      Util.createSnackBar("Enter gender", context,
           customAppTheme.primaryVariant, customAppTheme.white);
       return false;
     } else if (email.isEmpty) {

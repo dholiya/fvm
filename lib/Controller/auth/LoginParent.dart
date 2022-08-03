@@ -23,7 +23,7 @@ class LoginParent {
         var response = await request.send();
         await response.stream.bytesToString().then((value) {
           var data = json.decode(value);
-          if (data['status'] != 200 || data['data'] == null) {
+          if (data['status'] != 200 ) {
             contract.onLoadError(CommonModel.fromJson(data));
             return;
           }

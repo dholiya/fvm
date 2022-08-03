@@ -58,4 +58,10 @@ class AppString {
 
   static String somethingWrong="Something went wrong ";
 
+  static String fvm = "FVM";
+
+  static String cancle="Cancle";
+
+  static String closeApp="Close App";
+
 }

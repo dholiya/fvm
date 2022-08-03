@@ -92,7 +92,7 @@ class _CustomDrawer extends State<CustomDrawer> {
                 selectedColor: customAppTheme.primary,
                 leading: Icon(Icons.star_rounded),
                 textColor: customAppTheme.textDark,
-                title: Text(AppString.favorite,
+                title: Text(SplashScreen.isSeller?AppString.yourProduct:AppString.favorite,
                     style:
                         TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
                 onTap: () {
@@ -130,6 +130,8 @@ class _CustomDrawer extends State<CustomDrawer> {
                         TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
                 onTap: () {
                   setState(() {
+                    SpUtil.setIsSellerMode(false);
+                    SpUtil.setIsLogin(false);
                     Navigator.of(context).pushNamedAndRemoveUntil(LoginScreen.name, (Route<dynamic> route) => false);
                   });
                 },

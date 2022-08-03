@@ -135,7 +135,6 @@ class Util {
   /// This function is used for print API response
   static void consoleLog(String s) => log(s);
 
-  static List<String> imgListFav = <String>[];
 
   static LoginModel? loginData;
 

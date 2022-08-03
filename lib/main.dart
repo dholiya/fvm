@@ -57,7 +57,6 @@ class MyApp extends StatelessWidget {
         FavoritePage.name: (BuildContext context) => FavoritePage(),
         HomePage.name: (BuildContext context) => HomePage(),
         ProfilePage.name: (BuildContext context) => ProfilePage(),
-        AddProduct.name: (BuildContext context) => AddProduct(),
         YourProduct.name: (BuildContext context) => YourProduct(),
       },
     );

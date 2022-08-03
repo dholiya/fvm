@@ -157,8 +157,8 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 
 
                           await drawImage(captureImg!, wmImage!);
-                          img.Image thumbnail = copyResize(captureImg, width: 150);
-                          File(image.path).writeAsBytesSync(encodePng(thumbnail));
+                          img.Image thumbnail = copyResize(captureImg, height: 200);
+                          File(image.path).writeAsBytesSync(encodePng(captureImg));
 
                           setState(() {
                             images.add(image);

@@ -44,6 +44,12 @@ class Headers {
   }
 
 
+  Map<String, String> getHeaderAuthNXWWW() {
+    Map<String, String> _headers = <String, String>{};
+    _headers['Authorization']= _loginToken;
+    _headers['Content-Type'] = "application/x-www-form-urlencoded";
+    return _headers;
+  }
 
   Map<String, String> getHeaderAuthOnly() {
     Map<String, String> _headers = <String, String>{};

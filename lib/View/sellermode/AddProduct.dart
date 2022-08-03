@@ -4,20 +4,23 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:fvm/Controller/auth/VerifyOTPParent.dart';
-import 'package:fvm/Controller/product/AddProductController.dart';
-import 'package:fvm/Controller/product/AddProductParent.dart';
+import 'package:fvm/Controller/product/seller/AddProductController.dart';
+import 'package:fvm/Controller/product/seller/AddProductParent.dart';
 import 'package:fvm/Model/CommonModel.dart';
+import 'package:fvm/TabHandler.dart';
 import 'package:fvm/Util/AppString.dart';
 import 'package:fvm/Util/AppTheme.dart';
+import 'package:fvm/View/buyer/FavoritePage.dart';
 import 'package:fvm/Widget/DropDownCustom.dart';
 
 import '../../Util/Util.dart';
-import '../ViewProductDetails.dart';
 import 'TakePictureScreen.dart';
 
 class AddProduct extends StatefulWidget {
   static const name = '/addProduct';
+  final void Function(int) changePage;
+
+  const AddProduct({super.key, required this.changePage});
 
   @override
   _AddProduct createState() => _AddProduct();
@@ -33,6 +36,7 @@ class _AddProduct extends State<AddProduct> implements AddProductController {
   final priceController = TextEditingController();
 
   List<String> tagList = <String>[];
+
   // late CameraController _controller = ;
   var firstCamera;
   var image;
@@ -41,13 +45,12 @@ class _AddProduct extends State<AddProduct> implements AddProductController {
 
   DateTime date = new DateTime(2000);
 
-
   AddProductParent? _parent;
 
-  _AddProduct(){
+  _AddProduct() {
     _parent = AddProductParent(this);
-
   }
+
   @override
   void initState() {
     super.initState();
@@ -178,7 +181,7 @@ class _AddProduct extends State<AddProduct> implements AddProductController {
                         fontWeight: 700),
                   ),
                 ),
-                userInput(priceController, 'Enter initial price',
+                userInput(priceController, 'Enter base price',
                     TextInputType.number, 1),
                 Container(
                   padding: EdgeInsets.only(bottom: 10, top: 20),
@@ -212,18 +215,33 @@ class _AddProduct extends State<AddProduct> implements AddProductController {
                   onSelect: (category) {
                     setState(() {
                       selectedCategory = category;
+                      Util.consoleLog(
+                          "select cate : " + selectedCategory.toString());
                     });
                   },
+                  selected: selectedCategory,
                 ),
                 Container(
                   padding: EdgeInsets.only(bottom: 10, top: 20),
                   alignment: Alignment.centerLeft,
-                  child: Text(
-                    "Add tags",
-                    style: AppTheme.getTextStyle(
-                        color: customAppTheme.primary,
-                        themeData.textTheme.bodyText1,
-                        fontWeight: 700),
+                  child: Row(
+                    children: [
+                      Text(
+                        "Add tags",
+                        style: AppTheme.getTextStyle(
+                            color: customAppTheme.primary,
+                            themeData.textTheme.bodyText1,
+                            fontWeight: 700),
+                      ),
+                      Expanded(child: Container()),
+                      Text(
+                        "Hit GO to confirm tag",
+                        style: AppTheme.getTextStyle(
+                          color: customAppTheme.primary,
+                          themeData.textTheme.bodySmall,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 userInput(
@@ -341,22 +359,25 @@ class _AddProduct extends State<AddProduct> implements AddProductController {
                     Map<String, String> tagsJson = Map();
 
                     tagList.asMap().forEach((index, value) {
-                      tagsJson["tag[${index}]"]=value;;
+                      tagsJson["tag[${index}]"] = value;
+                      ;
                     });
 
                     _parent?.loadData({
                       'name': nameController.text.toString().trim(),
-                      'short_description': shortController.text.toString()
-                          .trim(),
+                      'short_description':
+                          shortController.text.toString().trim(),
                       'long_description': longController.text.toString(),
                       'base_price': priceController.text.toString(),
                       'category': selectedCategory.toString(),
                       'location_id': "sadasd54a5sdads",
                       'bid_end_date': date.toString(),
                       'current_highest_bid': "0",
-                      'seller_id': "62d6d8b0e00919154cc53edb",
-                      'bids': "5",
-                    },image,tagsJson);
+                      'seller_id': Util.loginData?.data?.sId,
+                      'bids': "0",
+                      'buyer_email': null.toString(),
+                      'buyer_id': null.toString(),
+                    }, image, tagsJson);
                     // Navigator.push(
                     //     context,
                     //     MaterialPageRoute(
@@ -458,29 +479,21 @@ class _AddProduct extends State<AddProduct> implements AddProductController {
 
   @override
   void onLoadCompleted(CommonModel items) {
+    widget.changePage(1);
+    FavoritePage();
     Util.createSnackBar(
-        items.msg,
-        context,
-        customAppTheme.colorError,
-        customAppTheme.white);
+        items.msg, context, customAppTheme.colorError, customAppTheme.white);
   }
 
   @override
   void onLoadConnection(connection) {
     Util.createSnackBar(
-        connection,
-        context,
-        customAppTheme.colorError,
-        customAppTheme.white);
+        connection, context, customAppTheme.colorError, customAppTheme.white);
   }
 
   @override
   void onLoadError(CommonModel items) {
     Util.createSnackBar(
-        items.msg,
-        context,
-        customAppTheme.colorError,
-        customAppTheme.white);
+        items.msg, context, customAppTheme.colorError, customAppTheme.white);
   }
-
 }

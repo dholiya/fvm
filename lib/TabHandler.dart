@@ -35,19 +35,25 @@ class _TabHandlerState extends State<TabHandler> {
     Util.loginData = SpUtil.getUserData();
   }
 
-    @override
+  @override
   Widget build(BuildContext context) {
     customAppTheme = CustomAppTheme();
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
         shadowColor: customAppTheme.blackTrans00,
-        title: Text(SplashScreen.isSeller?currentPage==0? AppString.listYourProduct: currentPage==1?AppString.yourProduct:AppString.profile:AppString.AppName),
+        title: Text(SplashScreen.isSeller
+            ? currentPage == 0
+                ? AppString.listYourProduct
+                : currentPage == 1
+                    ? AppString.yourProduct
+                    : AppString.profile
+            : AppString.AppName),
       ),
       body: Container(
         decoration: BoxDecoration(color: Colors.white),
         child: Center(
-          child: _getPage(currentPage),
+          child: getPage(currentPage),
         ),
       ),
       bottomNavigationBar: FancyBottomNavigation(
@@ -55,38 +61,38 @@ class _TabHandlerState extends State<TabHandler> {
         tabs: [
           SplashScreen.isSeller
               ? TabData(
-              iconData: Icons.line_style_rounded,
-              title: AppString.addProduct,
-              onclick: () {
-                final FancyBottomNavigationState fState =
-                bottomNavigationKey.currentState
-                as FancyBottomNavigationState;
-                fState.setPage(2);
-              })
+                  iconData: Icons.line_style_rounded,
+                  title: AppString.addProduct,
+                  onclick: () {
+                    final FancyBottomNavigationState fState =
+                        bottomNavigationKey.currentState
+                            as FancyBottomNavigationState;
+                    fState.setPage(2);
+                  })
               : TabData(
-              iconData: Icons.home_rounded,
-              title: AppString.home,
-              onclick: () {
-                final FancyBottomNavigationState fState =
-                bottomNavigationKey.currentState
-                as FancyBottomNavigationState;
-                fState.setPage(2);
-              }),
+                  iconData: Icons.home_rounded,
+                  title: AppString.home,
+                  onclick: () {
+                    final FancyBottomNavigationState fState =
+                        bottomNavigationKey.currentState
+                            as FancyBottomNavigationState;
+                    fState.setPage(2);
+                  }),
           SplashScreen.isSeller
               ? TabData(
-              iconData: Icons.view_list,
-              title: AppString.yourProduct,
-              onclick: () {
-                final FancyBottomNavigationState fState =
-                bottomNavigationKey.currentState
-                as FancyBottomNavigationState;
-                fState.setPage(2);
-              })
+                  iconData: Icons.view_list,
+                  title: AppString.yourProduct,
+                  onclick: () {
+                    final FancyBottomNavigationState fState =
+                        bottomNavigationKey.currentState
+                            as FancyBottomNavigationState;
+                    fState.setPage(2);
+                  })
               : TabData(
-            iconData: Icons.star_rounded,
-            title: AppString.favorite,
-            // onclick: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => SecondPage()))
-          ),
+                  iconData: Icons.star_rounded,
+                  title: AppString.favorite,
+                  // onclick: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => SecondPage()))
+                ),
           TabData(iconData: Icons.person_rounded, title: AppString.profile)
         ],
         initialSelection: 0,
@@ -104,7 +110,7 @@ class _TabHandlerState extends State<TabHandler> {
               setState(() {
                 currentPage = onSelectedItem;
                 scaffoldKey.currentState?.openEndDrawer();
-                _getPage(onSelectedItem);
+                getPage(onSelectedItem);
                 final FancyBottomNavigationState fState = bottomNavigationKey
                     .currentState as FancyBottomNavigationState;
                 fState.setPage(currentPage);
@@ -113,15 +119,26 @@ class _TabHandlerState extends State<TabHandler> {
       ),
     );
   }
-
-  _getPage(int page) {
+  getPage(int page) {
     switch (page) {
       case 0:
-        return SplashScreen.isSeller?AddProduct():HomePage();
+        return SplashScreen.isSeller ? AddProduct(changePage: (v) {
+          setState(() {
+            currentPage = v;
+            getPage(v);
+            final FancyBottomNavigationState fState =
+            bottomNavigationKey.currentState
+            as FancyBottomNavigationState;
+            fState.setPage(v);
+          });
+        })
+            : HomePage();
       case 1:
-        return SplashScreen.isSeller?YourProduct():FavoritePage();
+        return SplashScreen.isSeller ? YourProduct() : FavoritePage();
       default:
         return ProfilePage();
     }
   }
 }
+
+
